@@ -27,10 +27,28 @@ min(updata$votes) # 44
 
 # Basic plots
 plot(updata$party, updata$votes) # clearly outliers are present and need to be solved first
-
+str(updata$ac_no)
 # Possible research questions
 ## a. Plot the party and candidate getting max votes
 ## b. Plot the party and candidate getting min votes
 
+library(dplyr)
+library(magrittr)
+
+# Total votes per assembly constituency number (ac_no)
+total_votes<- updata %>% 
+  group_by(ac_no) %>%
+  summarise(total_votes= sum(votes))
+updata<- merge(updata, total_votes, by="ac_no") # merge the total votes
+glimpse(updata)
+
+# Vote Share
+voteshare <- updata %>%
+  group_by(ac_no) %>%
+  mutate(voteshare = 100*(votes/total_votes))
+
+
+
+  
 
 

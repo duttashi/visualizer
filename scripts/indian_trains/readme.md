@@ -35,6 +35,7 @@ Now, how to get geographical coordinates for each station?
 # Getting the coordinates for all stations
 
 ## Google Maps info 
-I first used the same approach as curiousanalyics: querying Google Maps via the `geocode` function of the `ggmap` package for getting coordinates for each station name. One can see the code used for this at the beginning of [this R code](R_code/getting_coordinates.R)
 
-I found that geocode() has a parse limit, so I then wrote a custom function that would suspend the data extraction for an hour, and, will begin geocode extraction again from where it stopped earlier. This function is given in  
+I first used the same approach as curiousanalyics: querying Google Maps via the `geocode` function of the `ggmap` package for getting coordinates for each station name. 
+
+I found that `geocode()` has a parse limit, so I then wrote a custom function that would suspend the data extraction for an hour, and, will begin geocode extraction again from where it stopped earlier. This function is given in [here](/scripts/indian_trains/get_indian_train_geocoordinates.R)

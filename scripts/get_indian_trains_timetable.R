@@ -14,12 +14,18 @@ names(timetable) <- c("trainNo", "trainName",
                       "departureTime", "distance",
                       "sourceStationCode", "sourceStationName",
                       "destStationCode", "destStationName")
-timetable <- timetable%>%
+train_timetable <- timetable%>%
   # time as time and no "'" in trainNo
   mutate(arrivalTime = hms(arrivalTime),
          departureTime = hms(departureTime)) %>%
   mutate(hourDeparture = hour(departureTime),
          numDeparture = as.character(departureTime),
          trainNo = gsub("'", "", trainNo)) 
+
+train_timetable <- timetable %>% 
+  # Remove 'JN', which represents junction, from station names     
+  mutate(sourceStationName = gsub(" JN", "", sourceStationName),
+         destStationName = gsub(" JN", "", destStationName),
+         stationName = gsub(" JN", "", stationName))
 
 save(timetable, file = "data/train_timetable.Rdata")

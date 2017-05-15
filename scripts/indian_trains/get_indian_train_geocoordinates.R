@@ -13,10 +13,10 @@ listNames <- unique(c(unique(train_timetable$stationName),
 # create a custom function 
 #define a function that will process googles server responses for us.
 
-
 ###########################
 # get the input data
 infile <- "train_detail"
+# load the data file
 data <- read.csv(paste0('data/', infile, '.csv'))
 getGeoDetails <- function(address){   
   #use the gecode function to query google servers

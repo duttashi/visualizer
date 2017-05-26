@@ -11,14 +11,16 @@ library("dplyr")
 library("readr")
 library("lubridate")
 # get and transform data
-timetable <- read_csv("data/train_detail.csv")
+timetable <- read_csv("data/IndianRailway_train_detail.csv")
+# change the column names
 names(timetable) <- c("trainNo", "trainName",
                       "islno",
                       "stationCode", "stationName",
                       "arrivalTime",
                       "departureTime", "distance",
                       "sourceStationCode", "sourceStationName",
-                      "destStationCode", "destStationName")
+                      "destStationCode", "destStationName"
+                      )
 train_timetable <- timetable%>%
   # time as time and no "'" in trainNo
   mutate(arrivalTime = hms(arrivalTime),

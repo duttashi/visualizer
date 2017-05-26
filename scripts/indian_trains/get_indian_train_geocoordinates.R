@@ -15,7 +15,7 @@ listNames <- unique(c(unique(train_timetable$stationName),
 
 ###########################
 # get the input data
-infile <- "train_detail"
+infile <- "IndianRailway_train_detail"
 # load the data file
 data <- read.csv(paste0('data/', infile, '.csv'))
 getGeoDetails <- function(address){   

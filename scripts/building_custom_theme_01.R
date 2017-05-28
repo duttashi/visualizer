@@ -1,10 +1,17 @@
 # Custom built theme for data visualization
 
+# clear screen
+rm(list = ls())
 # required libraries
 library(ggplot2)
 library(RColorBrewer)
 library(scales)
 library(grid)
+
+library(extrafont) # for additional fonts
+font_import() # for loading the fonts in memory
+loadfonts(device = "win") # register the fonts with Windows device
+fonts() # check for available fonts. 244 available fonts
 
 # load a built in dataset
 # library(help = "datasets")
@@ -46,11 +53,13 @@ my_theme <- function() {
     theme(legend.text = element_text(size=7,color=color.axis.title)) +
     
     # Set title and axis labels, and format these and tick marks
-    theme(plot.title=element_text(color=color.title, size=14, vjust=1.25)) +
+    # Change the font family for the title and labels
+    # see this SO post (https://stackoverflow.com/questions/4094094/modifying-fonts-in-ggplot2) and (https://stackoverflow.com/questions/34522732/changing-fonts-in-ggplot2)
+    theme(plot.title=element_text(color=color.title, size=14, vjust=1.25,family="Century Schoolbook")) +
     theme(axis.text.x=element_text(size=10,color=color.axis.text)) +
     theme(axis.text.y=element_text(size=10,color=color.axis.text)) +
-    theme(axis.title.x=element_text(size=12,color=color.axis.title, vjust=0)) +
-    theme(axis.title.y=element_text(size=12,color=color.axis.title, vjust=1.25)) +
+    theme(axis.title.x=element_text(size=12,color=color.axis.title, vjust=0,family="Comic Sans MS")) +
+    theme(axis.title.y=element_text(size=12,color=color.axis.title, vjust=1.25,family="Comic Sans MS")) +
     
     # Plot margins
     theme(plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
@@ -62,13 +71,16 @@ ggplot(data = women, aes(x=weight))+
   my_theme()
 
 # Add labelled axes and title. Use the labs()
-ggplot(data = women, aes(x=weight))+
+my_plot<- ggplot(data = women, aes(x=weight))+
   geom_histogram(binwidth = 12,fill="#c0392b", alpha=0.75)+
   my_theme()+
   labs(title="Distribution of women weight", x="weight in kg", y="count of women")+
   scale_x_continuous(breaks=seq(115,164, by=7)) +
   scale_y_continuous(labels=comma) + 
   geom_hline(yintercept=0, size=0.4, color="black")
+
+print(my_plot)
+
 
 
 

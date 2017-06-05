@@ -25,8 +25,8 @@ fonts() # Print list of all fonts
 # Configure Theme
 my_theme01 <- function() {
   theme(
-    plot.background = element_rect(fill = "#E2E2E3", colour = "#E2E2E3"),
-    panel.background = element_rect(fill = "#E2E2E3"),
+    plot.background = element_rect(fill = "#E2E2E3"),
+    #panel.background = element_rect(fill = "#E2E2E3"),
     panel.background = element_rect(fill = "white"),
     axis.text = element_text(colour = "#E7A922", family = "Impact"),
     plot.title = element_text(colour = "#552683", face = "bold", size = 18, vjust = 1, family = "Impact"),

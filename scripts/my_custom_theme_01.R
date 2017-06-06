@@ -32,6 +32,7 @@ library(ggplot2)
 p1 <- ggplot(data = diamonds, aes(x = cut, y = carat)) + 
   geom_bar(stat = "identity", fill = "#552683") +
   coord_flip() + ylab("Y LABEL") + xlab("X LABEL") +
+  theme(plot.title = element_text(hjust = 0.5))
   ggtitle("TITLE OF THE FIGURE")
 p1
 
@@ -44,6 +45,7 @@ p2<- ggplot(data = diamonds, aes(x=carat, y=z))+
   geom_smooth(method=lm)+  # Add linear regression line 
                           #  (by default includes 95% confidence region)
   ylab("Y LABEL") + xlab("X LABEL") +
+  theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("TITLE OF THE FIGURE")
 p2
 # test the theme
@@ -53,6 +55,7 @@ p2+my_theme01()
 ?geom_boxplot
 p3<- ggplot(data = diamonds, aes(x=cut, y=price))+
   geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("TITLE OF THE FIGURE")
   
 p3

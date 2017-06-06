@@ -11,6 +11,7 @@ my_theme01 <- function() {
     plot.background = element_rect(fill = "#E2E2E3"),
     #panel.background = element_rect(fill = "#E2E2E3"),
     panel.background = element_rect(fill = "white"),
+    panel.border = element_rect(fill = NA),
     axis.text = element_text(colour = "black", family = "Garamond"),
     plot.title = element_text(colour = "#552683", face = "bold", size = 18, vjust = 1, family = "Garamond"),
     axis.title = element_text(colour = "#552683", face = "bold", size = 13, family = "Garamond"),

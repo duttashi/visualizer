@@ -22,6 +22,7 @@ library(ggplot2)
 library(extrafont)
 library(magrittr)
 library(dplyr)
+library(ggthemes)
 
 student_theme<- function(){
   theme(
@@ -45,6 +46,8 @@ p1<- ggplot(data = xapi.data, aes(x=NationalITy, y=raisedhands))+
   ggtitle("Interaction in classroom")
 p1+student_theme()
 
+p1+theme_fivethirtyeight()
+
 
 # Class wise boxplots
 p2<- ggplot(data = xapi.data, aes(x=gender, y=raisedhands))+
@@ -52,6 +55,7 @@ p2<- ggplot(data = xapi.data, aes(x=gender, y=raisedhands))+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Are girls more attentive than boys in classroom?")
 p2+student_theme() # girls raise more hands in class
+p2+theme_fivethirtyeight()
 
 p2.0<- ggplot(data = xapi.data, aes(x=gender, y=VisITedResources))+
   geom_boxplot(outlier.colour = "red")+

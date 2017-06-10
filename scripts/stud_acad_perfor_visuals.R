@@ -4,9 +4,15 @@
 # Objective: visualize data for predicting student performance
 
 # required libraries
+library(dplyr)
+library(extrafont)
+library(ggplot2)
 library(ggpubr)
+library(ggthemes)
+library(gridExtra) # for plotting multiple graphs on the same page
 library(magrittr) # for the %>%
-library(plyr) # for using revalue() to rename the factor levels
+
+
 
 # check working directory
 getwd()
@@ -14,13 +20,82 @@ getwd()
 rm(list = ls())
 
 # Initial data visualization
-## create a custom theme
-library(ggplot2)
-library(extrafont)
-library(magrittr)
-library(dplyr)
-library(ggthemes)
+# Data visualization using the ggpubr library
+# Reference: see this post: https://www.r-bloggers.com/add-p-values-and-significance-levels-to-ggplots/
 
+# Bivariate data visualzation
+
+# Stacked Bar plots
+p1<- ggbarplot(data = data_balanced, x="Gender", y="VisitedResources",
+          position = position_dodge(0.6), fill= "Class",
+          palette = "jco",
+          x.text.angle=45)
+p2<- ggbarplot(data = data_balanced, x="Gender", y="RaisedHands",
+               position = position_dodge(0.6), fill= "Class",
+               palette = "jco",
+               x.text.angle=45)
+p3<- ggbarplot(data = data_balanced, x="Gender", y="ViewAnnouncements",
+               position = position_dodge(0.6), fill= "Class",
+               palette = "jco",
+               x.text.angle=45)
+p4<- ggbarplot(data = data_balanced, x="Gender", y="Discussion",
+               position = position_dodge(0.6), fill= "Class",
+               palette = "jco",
+               x.text.angle=45)
+grid.arrange(p1,p2,p3,p4, ncol=2, nrow=2)
+
+# Boxplots
+p1<- ggboxplot(data = data_balanced, x="Gender", y="VisitedResources",
+               color= "Class",
+               palette = "jco")
+
+p1<-p1+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+p2<- ggboxplot(data = data_balanced, x="Gender", y="RaisedHands",
+               color= "Class",
+               palette = "jco")
+p2<-p2+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+p3<- ggboxplot(data = data_balanced, x="Gender", y="ViewAnnouncements",
+               color= "Class",
+               palette = "jco")
+p3<-p3+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+p4<- ggboxplot(data = data_balanced, x="Gender", y="Discussion",
+               color= "Class",
+               palette = "jco")
+p4<-p4+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+
+#grid.arrange(p1,p2,nrow=1, ncol=2)
+grid.arrange(p1,p2,p3,p4, ncol=2, nrow=2)
+
+
+
+
+
+
+
+
+
+####### Miscelaneous Code below ##########
+
+# Create a box plot with p-values:
+# Default method = "kruskal.test" for comparing multiple groups
+p <- ggboxplot(data_balanced, x = "Semester", y = "RaisedHands",
+                 color = "Gender", palette = "jco")+
+  stat_compare_means(label.x = 1.2, label.y = 110)
+p
+
+#  Kruskals wallis test 
+p + stat_compare_means(label.x = 1.2, label.y = 110)
+# Change method
+p + stat_compare_means(method = "t.test", label.x = 1.9, label.y = 110)
+# Change p-value label position
+p + stat_compare_means(method = "anova", label.x = 2.1, label.y = 110)
+
+p0 <- ggboxplot(data_balanced, x = "Gender", y = "RaisedHands",
+               color = "Relation", palette = "jco")+
+  stat_compare_means(label.x = 1.2, label.y = 110)
+p0
+
+## create a custom theme
 student_theme<- function(){
   theme(
     plot.background = element_rect(fill = "#E2E2E3"),
@@ -126,39 +201,4 @@ tile.map <- data_balanced %>%
 ggplot(data = tile.map, aes(x = Gender, Nationality, fill = Count)) + 
   geom_tile()+
   student_theme()
-
-# Data visualization using the ggpubr library
-# Reference: see this post: https://www.r-bloggers.com/add-p-values-and-significance-levels-to-ggplots/
-library(ggpubr)
-
-ggbarplot(data = data_balanced, x="Nationality", y="RaisedHands", 
-          fill = "Gender",
-          position = position_dodge(0.4),
-          palette = "jco",
-          x.text.angle=45)
-
-ggbarplot(data = data_balanced, x="Nationality",y="Discussion", 
-          fill = "Gender",
-          position = position_dodge(0.4),
-          palette = "jco",
-          x.text.angle=45)
-
-# Create a box plot with p-values:
-
-# Default method = "kruskal.test" for comparing multiple groups
-p <- ggboxplot(data_balanced, x = "Semester", y = "RaisedHands",
-                 color = "Relation", palette = "jco")+
-  stat_compare_means(label.x = 1.2, label.y = 110)
-p
-
-#  Kruskals wallis test 
-p + stat_compare_means(label.x = 1.2, label.y = 110)
-# Change method
-p + stat_compare_means(method = "t.test", label.x = 1.9, label.y = 110)
-# Change p-value label position
-p + stat_compare_means(method = "anova", label.x = 2.1, label.y = 110)
-
-p0 <- ggboxplot(data_balanced, x = "Gender", y = "RaisedHands",
-               color = "Relation", palette = "jco")+
-  stat_compare_means(label.x = 1.2, label.y = 110)
-p0
+############ End Miscellaneous Code ###############

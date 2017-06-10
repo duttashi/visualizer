@@ -12,61 +12,134 @@ library(plyr) # for using revalue() to rename the factor levels
 getwd()
 # clean working directory
 rm(list = ls())
-# Load the data in R environment
-xapi.data<- read.csv("data/lmsdata.csv", header = TRUE, sep = ",")
-# check data structure
-dim(xapi.data) # 480 rows 17 cols
-str(xapi.data) 
 
-# Data preprocessing
-# rename the column name for standardisation
-colnames(xapi.data)<- c("Gender","Nationality","PlaceofBirth","StageID","GradeID","SectionID",
-                        "Topic","Semester","Relation","RaisedHands","VisitedResources",
-                        "ViewAnnouncements","Discussion",
-                        "ParentAnswerSurvey","ParentSchoolSatisfy",
-                        "StudentAbsentDays","Class"
-                        )
-str(xapi.data)
-# rename the column values for standardisation
-xapi.data$Gender<- revalue(xapi.data$Gender, c("F"="female", "M"="male"))
-levels(xapi.data$Nationality)
-xapi.data$Nationality<-revalue(xapi.data$Nationality, c("KW"="Kuwait","lebanon"="Lebanon",
-                                                        "venzuela"="Venzuela"))
-levels(xapi.data$PlaceofBirth)
-xapi.data$PlaceofBirth<- revalue(xapi.data$PlaceofBirth, c("KuwaIT"="Kuwait","lebanon"="Lebanon",
-                                                           "venzuela"="Venzuela"))
-levels(xapi.data$StageID)
-xapi.data$StageID<- revalue(xapi.data$StageID, c("lowerlevel"="PrimarySchool"))
-levels(xapi.data$Semester)
-xapi.data$Semester<- revalue(xapi.data$Semester, c("F"="FirstSemester","S"="SecondSemester"))
-levels(xapi.data$Relation)
-xapi.data$Relation<- revalue(xapi.data$Relation, c("Mum"="Mother"))
-levels(xapi.data$Class)
-xapi.data$Class<- revalue(xapi.data$Class, c("H"="HighLevel","M"="MiddleLevel","L"="LowLevel"))
-## observation: rearrange the cols 
-xapi.data<- xapi.data[,c(1:9,14:17,10:13)]
-str(xapi.data)
+# Initial data visualization
+## create a custom theme
+library(ggplot2)
+library(extrafont)
+library(magrittr)
+library(dplyr)
+library(ggthemes)
+
+student_theme<- function(){
+  theme(
+    plot.background = element_rect(fill = "#E2E2E3"),
+    panel.background = element_rect(fill = "white"),
+    panel.border = element_rect(fill = NA), # the fill=NA will display a line along the plot rect.
+    plot.title = element_text(family = "Garamond", size = 18, color = "black"),
+    axis.title = element_text(family = "Garamond", size = 14, colour = "black"),
+    axis.ticks = element_line(size = 6, color = "purple"),
+    axis.text = element_text(family = "Garamond",size = 12, colour = "black")
+    
+  )
+}
+
+# print the colnames
+colnames(data.rose)
+
+# Testing the custom theme
+
+p1<- ggplot(data = data.rose, aes(x=Nationality, y=RaisedHands))+
+  geom_bar(stat = "identity",fill = "#552683") +
+  coord_flip() + ylab("Raised hands in class") + xlab("Nationality") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Interaction in classroom")
+p1+student_theme()
+
+p1+theme_fivethirtyeight()
 
 
-# Dealing with Imbalanced data
-## quick references: https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/
-## http://dpmartin42.github.io/blogposts/r/imbalanced-classes-part-1
-## https://stats.stackexchange.com/questions/157940/what-balancing-method-can-i-apply-to-a-imbalanced-data-set
+# Class wise boxplots
+p2<- ggplot(data = data.rose, aes(x=gender, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Are girls more attentive than boys in classroom?")
+p2+student_theme() # girls raise more hands in class
+p2+theme_fivethirtyeight()
 
+p2.0<- ggplot(data = data.rose, aes(x=gender, y=VisitedResources))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Are girls more attentive than boys in classroom?")
+p2.0+student_theme() # girls visit more resources than boys
+
+p2.1<- ggplot(data = data.rose, aes(x=Class, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Which class level has higher classroom interaction")
+p2.1+student_theme()
+
+p2.2<- ggplot(data = data.rose, aes(x=StudentAbsenceDays, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Student absentism vs Subject interest?")
+p2.2+student_theme()
+
+p2.3<- ggplot(data = data.rose, aes(x=Topic, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))+
+  ggtitle("Which subject inspires more to ask questions?")
+p2.3+student_theme()
+
+p2.4<- ggplot(data = data.rose, aes(x=Nationality, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))+
+  ggtitle("Nationality vs Raised hands")
+p2.4+student_theme() # Iraq & Palestine have the highest hand raises. Iraq and Lybia have the lowest hand raises.
+
+p2.5<- ggplot(data = data.rose, aes(x=ParentAnsweringSurvey, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Parents who answer school survey vs Raised hands")
+p2.5+student_theme()  # parents who answer school survey have more attentive children
+
+p2.6<- ggplot(data = data.rose, aes(x=Relation, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Guardian who answer school survey vs Raised hands")
+p2.6+student_theme()  # Mothers as guardian have more attentive children
+
+p2.7<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=RaisedHands))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Parent satisfaction with school vs Raised hands")
+p2.7+student_theme()  # Parents satisfied with school have more attentive children
+
+p2.8<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=VisitedResources))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Parent satisfaction with school vs Visited resources")
+p2.8+student_theme() # Parents satisfied with school have more visited resources
+
+p2.9<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=ViewAnnouncements))+
+  geom_boxplot(outlier.colour = "red")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Parent satisfaction with school vs Announcements View")
+p2.9+student_theme() 
+
+tile.map <- data.rose %>% 
+  group_by(gender, Nationality) %>%
+  summarise(Count = n()) %>% arrange(desc(Count))
+
+ggplot(data = tile.map, aes(x = gender, Nationality, fill = Count)) + 
+  geom_tile()+
+  student_theme()
 
 # Initial data visualizations
 # Reference: see this post: https://www.r-bloggers.com/add-p-values-and-significance-levels-to-ggplots/
 
-str(xapi.data)
+str(data.rose)
 
-ggbarplot(data = xapi.data, x="Nationality", y="RaisedHands", 
+ggbarplot(data = data.rose, x="Nationality", y="RaisedHands", 
           fill = "Gender",
           position = position_dodge(0.4),
           palette = "jco",
           x.text.angle=45,
           sort.val = c("asc"))
 
-ggbarplot(data = xapi.data, x="Nationality",y="Discussion", 
+ggbarplot(data = data.rose, x="Nationality",y="Discussion", 
           fill = "Gender",
           position = position_dodge(0.4),
           palette = "jco",
@@ -74,13 +147,18 @@ ggbarplot(data = xapi.data, x="Nationality",y="Discussion",
           sort.val = c("asc"))
 
 # Create a box plot with p-values:
-  
-p <- ggboxplot(xapi.data, x = "Semester", y = "RaisedHands",
+
+# Default method = "kruskal.test" for comparing multiple groups
+p <- ggboxplot(data.rose, x = "Semester", y = "RaisedHands",
                  color = "Relation", palette = "jco",
-                 add = "jitter")
-#  Add p-value
+                 add = "jitter")+
+  stat_compare_means(label.x = 1.2, label.y = 110)
+p
+
+#  Kruskals wallis test 
 p + stat_compare_means(label.x = 1.2, label.y = 110)
 # Change method
 p + stat_compare_means(method = "t.test", label.x = 1.2, label.y = 110)
 # Change p-value label position
-p + stat_compare_means( label.x = 1.2, label.y = 110)
+p + stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+

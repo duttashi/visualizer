@@ -21,26 +21,26 @@ colnames(xapi.data)<- c("Gender","Nationality","PlaceofBirth","StageID","GradeID
                         "Topic","Semester","Relation","RaisedHands","VisitedResources",
                         "ViewAnnouncements","Discussion",
                         "ParentAnswerSurvey","ParentSchoolSatisfy",
-                        "StudentAbsentDays","Class"
-)
+                        "StudentAbsentDays","Class")
 str(xapi.data)
 # rename the column values for standardisation
 xapi.data$Gender<- revalue(xapi.data$Gender, c("F"="female", "M"="male"))
-levels(xapi.data$Nationality)
+#levels(xapi.data$Nationality)
 xapi.data$Nationality<-revalue(xapi.data$Nationality, c("KW"="Kuwait","lebanon"="Lebanon",
                                                         "venzuela"="Venzuela"))
-levels(xapi.data$PlaceofBirth)
+#levels(xapi.data$PlaceofBirth)
 xapi.data$PlaceofBirth<- revalue(xapi.data$PlaceofBirth, c("KuwaIT"="Kuwait","lebanon"="Lebanon",
                                                            "venzuela"="Venzuela"))
-levels(xapi.data$StageID)
+#levels(xapi.data$StageID)
 xapi.data$StageID<- revalue(xapi.data$StageID, c("lowerlevel"="PrimarySchool"))
-levels(xapi.data$Semester)
+#levels(xapi.data$Semester)
 xapi.data$Semester<- revalue(xapi.data$Semester, c("F"="Semester-1","S"="Semester-2"))
-levels(xapi.data$Relation)
+#levels(xapi.data$Relation)
 xapi.data$Relation<- revalue(xapi.data$Relation, c("Mum"="Mother"))
-levels(xapi.data$Class)
+#levels(xapi.data$Class)
 xapi.data$Class<- revalue(xapi.data$Class, c("H"="HighLevel","M"="MiddleLevel","L"="LowLevel"))
-## observation: rearrange the cols 
+
+# Rearrange the cols 
 xapi.data<- xapi.data[,c(1:9,14:17,10:13)]
 str(xapi.data)
 
@@ -56,16 +56,16 @@ table(xapi.data$Gender) # more male students as compared to female students
 prop.table(table(xapi.data$Gender)) # there are 63% male students and 36% female students
 
 library(ROSE)
-data(hacide)
-str(hacide.train)
-#over sampling
-data_balanced<- ovun.sample(Gender ~ ., data = xapi.data, 
+# first over and under sampling for balancing data on gender
+data_balanced<- ovun.sample(Gender ~ ., data = xapi.data,
                                   method = "both", 
                                   N=nrow(xapi.data), seed = 11)$data
-data.rose<- ROSE(Gender ~ ., data = xapi.data, 
-                 N=nrow(xapi.data), seed = 11)$data
-
+# Next, I over and under sampling again for balancing data on relation
+data_balanced<- ovun.sample(Relation ~ ., data = data_balanced,
+                            method = "both", 
+                            N=nrow(data_balanced), seed = 11)$data
 table(data_balanced$Gender)
 prop.table(table(data_balanced$Gender)) # there are 52% male students and 47% female students
-table(data.rose$Gender)
-prop.table(table(data.rose$Gender))
+
+table(data_balanced$Relation)
+prop.table(table(data_balanced$Relation))

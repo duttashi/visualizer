@@ -35,11 +35,11 @@ student_theme<- function(){
 }
 
 # print the colnames
-colnames(data.rose)
+colnames(data_balanced)
 
 # Testing the custom theme
 
-p1<- ggplot(data = data.rose, aes(x=Nationality, y=RaisedHands))+
+p1<- ggplot(data = data_balanced, aes(x=Nationality, y=RaisedHands))+
   geom_bar(stat = "identity",fill = "#552683") +
   coord_flip() + ylab("Raised hands in class") + xlab("Nationality") +
   theme(plot.title = element_text(hjust = 0.5))+
@@ -50,115 +50,115 @@ p1+theme_fivethirtyeight()
 
 
 # Class wise boxplots
-p2<- ggplot(data = data.rose, aes(x=gender, y=RaisedHands))+
+p2<- ggplot(data = data_balanced, aes(x=Gender, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Are girls more attentive than boys in classroom?")
 p2+student_theme() # girls raise more hands in class
 p2+theme_fivethirtyeight()
 
-p2.0<- ggplot(data = data.rose, aes(x=gender, y=VisitedResources))+
+p2.0<- ggplot(data = data_balanced, aes(x=Gender, y=VisitedResources))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Are girls more attentive than boys in classroom?")
 p2.0+student_theme() # girls visit more resources than boys
 
-p2.1<- ggplot(data = data.rose, aes(x=Class, y=RaisedHands))+
+p2.1<- ggplot(data = data_balanced, aes(x=Class, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Which class level has higher classroom interaction")
 p2.1+student_theme()
 
-p2.2<- ggplot(data = data.rose, aes(x=StudentAbsenceDays, y=RaisedHands))+
+p2.2<- ggplot(data = data_balanced, aes(x=StudentAbsenceDays, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Student absentism vs Subject interest?")
 p2.2+student_theme()
 
-p2.3<- ggplot(data = data.rose, aes(x=Topic, y=RaisedHands))+
+p2.3<- ggplot(data = data_balanced, aes(x=Topic, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))+
   ggtitle("Which subject inspires more to ask questions?")
 p2.3+student_theme()
 
-p2.4<- ggplot(data = data.rose, aes(x=Nationality, y=RaisedHands))+
+p2.4<- ggplot(data = data_balanced, aes(x=Nationality, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))+
   ggtitle("Nationality vs Raised hands")
 p2.4+student_theme() # Iraq & Palestine have the highest hand raises. Iraq and Lybia have the lowest hand raises.
 
-p2.5<- ggplot(data = data.rose, aes(x=ParentAnsweringSurvey, y=RaisedHands))+
+p2.5<- ggplot(data = data_balanced, aes(x=ParentAnswerSurvey, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Parents who answer school survey vs Raised hands")
 p2.5+student_theme()  # parents who answer school survey have more attentive children
 
-p2.6<- ggplot(data = data.rose, aes(x=Relation, y=RaisedHands))+
+p2.6<- ggplot(data = data_balanced, aes(x=Relation, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Guardian who answer school survey vs Raised hands")
 p2.6+student_theme()  # Mothers as guardian have more attentive children
 
-p2.7<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=RaisedHands))+
+p2.7<- ggplot(data = data_balanced, aes(x=ParentSchoolSatisfy, y=RaisedHands))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Parent satisfaction with school vs Raised hands")
 p2.7+student_theme()  # Parents satisfied with school have more attentive children
 
-p2.8<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=VisitedResources))+
+p2.8<- ggplot(data = data_balanced, aes(x=ParentSchoolSatisfy, y=VisitedResources))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Parent satisfaction with school vs Visited resources")
 p2.8+student_theme() # Parents satisfied with school have more visited resources
 
-p2.9<- ggplot(data = data.rose, aes(x=ParentSchoolSatisfy, y=ViewAnnouncements))+
+p2.9<- ggplot(data = data_balanced, aes(x=ParentSchoolSatisfy, y=ViewAnnouncements))+
   geom_boxplot(outlier.colour = "red")+
   theme(plot.title = element_text(hjust = 0.5))+
   ggtitle("Parent satisfaction with school vs Announcements View")
 p2.9+student_theme() 
 
-tile.map <- data.rose %>% 
-  group_by(gender, Nationality) %>%
+tile.map <- data_balanced %>% 
+  group_by(Gender, Nationality) %>%
   summarise(Count = n()) %>% arrange(desc(Count))
 
-ggplot(data = tile.map, aes(x = gender, Nationality, fill = Count)) + 
+ggplot(data = tile.map, aes(x = Gender, Nationality, fill = Count)) + 
   geom_tile()+
   student_theme()
 
-# Initial data visualizations
+# Data visualization using the ggpubr library
 # Reference: see this post: https://www.r-bloggers.com/add-p-values-and-significance-levels-to-ggplots/
+library(ggpubr)
 
-str(data.rose)
-
-ggbarplot(data = data.rose, x="Nationality", y="RaisedHands", 
+ggbarplot(data = data_balanced, x="Nationality", y="RaisedHands", 
           fill = "Gender",
           position = position_dodge(0.4),
           palette = "jco",
-          x.text.angle=45,
-          sort.val = c("asc"))
+          x.text.angle=45)
 
-ggbarplot(data = data.rose, x="Nationality",y="Discussion", 
+ggbarplot(data = data_balanced, x="Nationality",y="Discussion", 
           fill = "Gender",
           position = position_dodge(0.4),
           palette = "jco",
-          x.text.angle=45,
-          sort.val = c("asc"))
+          x.text.angle=45)
 
 # Create a box plot with p-values:
 
 # Default method = "kruskal.test" for comparing multiple groups
-p <- ggboxplot(data.rose, x = "Semester", y = "RaisedHands",
-                 color = "Relation", palette = "jco",
-                 add = "jitter")+
+p <- ggboxplot(data_balanced, x = "Semester", y = "RaisedHands",
+                 color = "Relation", palette = "jco")+
   stat_compare_means(label.x = 1.2, label.y = 110)
 p
 
 #  Kruskals wallis test 
 p + stat_compare_means(label.x = 1.2, label.y = 110)
 # Change method
-p + stat_compare_means(method = "t.test", label.x = 1.2, label.y = 110)
+p + stat_compare_means(method = "t.test", label.x = 1.9, label.y = 110)
 # Change p-value label position
-p + stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+p + stat_compare_means(method = "anova", label.x = 2.1, label.y = 110)
 
+p0 <- ggboxplot(data_balanced, x = "Gender", y = "RaisedHands",
+               color = "Relation", palette = "jco")+
+  stat_compare_means(label.x = 1.2, label.y = 110)
+p0

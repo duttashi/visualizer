@@ -10,119 +10,62 @@ xapi.data<- read.csv("data/lmsdata.csv", header = TRUE, sep = ",")
 # check data structure
 dim(xapi.data) # 480 rows 17 cols
 str(xapi.data) 
+sum(is.na(xapi.data)) # no missing values
+
+# load the required libraries
+library(magrittr) # for the %>%
+library(plyr) # for using revalue() to rename the factor levels
+# Data preprocessing
+# rename the column name for standardisation
+colnames(xapi.data)<- c("Gender","Nationality","PlaceofBirth","StageID","GradeID","SectionID",
+                        "Topic","Semester","Relation","RaisedHands","VisitedResources",
+                        "ViewAnnouncements","Discussion",
+                        "ParentAnswerSurvey","ParentSchoolSatisfy",
+                        "StudentAbsentDays","Class"
+)
+str(xapi.data)
+# rename the column values for standardisation
+xapi.data$Gender<- revalue(xapi.data$Gender, c("F"="female", "M"="male"))
+levels(xapi.data$Nationality)
+xapi.data$Nationality<-revalue(xapi.data$Nationality, c("KW"="Kuwait","lebanon"="Lebanon",
+                                                        "venzuela"="Venzuela"))
+levels(xapi.data$PlaceofBirth)
+xapi.data$PlaceofBirth<- revalue(xapi.data$PlaceofBirth, c("KuwaIT"="Kuwait","lebanon"="Lebanon",
+                                                           "venzuela"="Venzuela"))
+levels(xapi.data$StageID)
+xapi.data$StageID<- revalue(xapi.data$StageID, c("lowerlevel"="PrimarySchool"))
+levels(xapi.data$Semester)
+xapi.data$Semester<- revalue(xapi.data$Semester, c("F"="Semester-1","S"="Semester-2"))
+levels(xapi.data$Relation)
+xapi.data$Relation<- revalue(xapi.data$Relation, c("Mum"="Mother"))
+levels(xapi.data$Class)
+xapi.data$Class<- revalue(xapi.data$Class, c("H"="HighLevel","M"="MiddleLevel","L"="LowLevel"))
 ## observation: rearrange the cols 
 xapi.data<- xapi.data[,c(1:9,14:17,10:13)]
 str(xapi.data)
-# check for missing data
-sum(is.na(xapi.data)) # NIL 
-
-# Initial data visualization
-## create a custom theme
-library(ggplot2)
-library(extrafont)
-library(magrittr)
-library(dplyr)
-library(ggthemes)
-
-student_theme<- function(){
-  theme(
-    plot.background = element_rect(fill = "#E2E2E3"),
-    panel.background = element_rect(fill = "white"),
-    panel.border = element_rect(fill = NA), # the fill=NA will display a line along the plot rect.
-    plot.title = element_text(family = "Garamond", size = 18, color = "black"),
-    axis.title = element_text(family = "Garamond", size = 14, colour = "black"),
-    axis.ticks = element_line(size = 6, color = "purple"),
-    axis.text = element_text(family = "Garamond",size = 12, colour = "black")
-    
-  )
-}
-
-# Testing the custom theme
-
-p1<- ggplot(data = xapi.data, aes(x=NationalITy, y=raisedhands))+
-  geom_bar(stat = "identity",fill = "#552683") +
-  coord_flip() + ylab("Raised hands in class") + xlab("Nationality") +
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Interaction in classroom")
-p1+student_theme()
-
-p1+theme_fivethirtyeight()
 
 
-# Class wise boxplots
-p2<- ggplot(data = xapi.data, aes(x=gender, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Are girls more attentive than boys in classroom?")
-p2+student_theme() # girls raise more hands in class
-p2+theme_fivethirtyeight()
+# Dealing with Imbalanced data
+## quick references: https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/
+## http://dpmartin42.github.io/blogposts/r/imbalanced-classes-part-1
+## https://stats.stackexchange.com/questions/157940/what-balancing-method-can-i-apply-to-a-imbalanced-data-set
 
-p2.0<- ggplot(data = xapi.data, aes(x=gender, y=VisITedResources))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Are girls more attentive than boys in classroom?")
-p2.0+student_theme() # girls visit more resources than boys
+# Balancing the imbalanced data
+table(xapi.data$Gender) # more male students as compared to female students
+# Check proportion
+prop.table(table(xapi.data$Gender)) # there are 63% male students and 36% female students
 
-p2.1<- ggplot(data = xapi.data, aes(x=Class, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Which class level has higher classroom interaction")
-p2.1+student_theme()
+library(ROSE)
+data(hacide)
+str(hacide.train)
+#over sampling
+data_balanced<- ovun.sample(Gender ~ ., data = xapi.data, 
+                                  method = "both", 
+                                  N=nrow(xapi.data), seed = 11)$data
+data.rose<- ROSE(Gender ~ ., data = xapi.data, 
+                 N=nrow(xapi.data), seed = 11)$data
 
-p2.2<- ggplot(data = xapi.data, aes(x=StudentAbsenceDays, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Student absentism vs Subject interest?")
-p2.2+student_theme()
-
-p2.3<- ggplot(data = xapi.data, aes(x=Topic, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.text.x = element_text(angle = 45, hjust = 1))+
-  ggtitle("Which subject inspires more to ask questions?")
-p2.3+student_theme()
-
-p2.4<- ggplot(data = xapi.data, aes(x=NationalITy, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5),
-        axis.text.x = element_text(angle = 45, hjust = 1))+
-  ggtitle("Nationality vs Raised hands")
-p2.4+student_theme() # Iraq & Palestine have the highest hand raises. Iraq and Lybia have the lowest hand raises.
-
-p2.5<- ggplot(data = xapi.data, aes(x=ParentAnsweringSurvey, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Parents who answer school survey vs Raised hands")
-p2.5+student_theme()  # parents who answer school survey have more attentive children
-
-p2.6<- ggplot(data = xapi.data, aes(x=Relation, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Guardian who answer school survey vs Raised hands")
-p2.6+student_theme()  # Mothers as guardian have more attentive children
-
-p2.7<- ggplot(data = xapi.data, aes(x=ParentschoolSatisfaction, y=raisedhands))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Parent satisfaction with school vs Raised hands")
-p2.7+student_theme()  # Parents satisfied with school have more attentive children
-
-p2.8<- ggplot(data = xapi.data, aes(x=ParentschoolSatisfaction, y=VisITedResources))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Parent satisfaction with school vs Visited resources")
-p2.8+student_theme() # Parents satisfied with school have more visited resources
-
-p2.9<- ggplot(data = xapi.data, aes(x=ParentschoolSatisfaction, y=AnnouncementsView))+
-  geom_boxplot(outlier.colour = "red")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  ggtitle("Parent satisfaction with school vs Announcements View")
-p2.9+student_theme() 
-
-tile.map <- xapi.data %>% 
-  group_by(gender, NationalITy) %>%
-  summarise(Count = n()) %>% arrange(desc(Count))
-
-ggplot(data = tile.map, aes(x = gender, NationalITy, fill = Count)) + 
-  geom_tile()+
-  student_theme()
+table(data_balanced$Gender)
+prop.table(table(data_balanced$Gender)) # there are 52% male students and 47% female students
+table(data.rose$Gender)
+prop.table(table(data.rose$Gender))

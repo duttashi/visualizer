@@ -20,10 +20,14 @@ getwd()
 rm(list = ls())
 
 # Initial data visualization
+str(data_balanced)
 # Data visualization using the ggpubr library
 # Reference: see this post: https://www.r-bloggers.com/add-p-values-and-significance-levels-to-ggplots/
 
 # Bivariate data visualzation
+# reset the mfrow() parameter
+par(mfrow=c(1,1))
+dev.off()
 
 # Stacked Bar plots
 p1<- ggbarplot(data = data_balanced, x="Gender", y="VisitedResources",
@@ -44,34 +48,104 @@ p4<- ggbarplot(data = data_balanced, x="Gender", y="Discussion",
                x.text.angle=45)
 grid.arrange(p1,p2,p3,p4, ncol=2, nrow=2)
 
-# Boxplots
-p1<- ggboxplot(data = data_balanced, x="Gender", y="VisitedResources",
-               color= "Class",
-               palette = "jco")
+# Boxplots for Gender
+# reset the mfrow() parameter
+par(mfrow=c(1,1))
+dev.off()
 
+p1<- ggboxplot(data = data_balanced, x="Gender", y="VisitedResources",
+               color= "Semester",
+               palette = "jco")
 p1<-p1+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+
 p2<- ggboxplot(data = data_balanced, x="Gender", y="RaisedHands",
-               color= "Class",
+               color= "Semester",
                palette = "jco")
 p2<-p2+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+
 p3<- ggboxplot(data = data_balanced, x="Gender", y="ViewAnnouncements",
-               color= "Class",
+               color= "Semester",
                palette = "jco")
 p3<-p3+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+
 p4<- ggboxplot(data = data_balanced, x="Gender", y="Discussion",
-               color= "Class",
+               color= "Semester",
                palette = "jco")
 p4<-p4+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
-
 #grid.arrange(p1,p2,nrow=1, ncol=2)
 grid.arrange(p1,p2,p3,p4, ncol=2, nrow=2)
 
+## Boxplots for Relation  
+# reset the mfrow() parameter
+par(mfrow=c(1,1))
 
+p1<- ggboxplot(data = data_balanced, x="Gender", y="VisitedResources",
+               fill= "Relation",
+               palette = "jco", width = 0.5)
+p1<-p1+ stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
 
+p2<- ggboxplot(data = data_balanced, x="Gender", y="RaisedHands",
+               fill= "Relation",
+               palette = "jco", width = 0.5)
+p2<-p2+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
 
+p3<- ggboxplot(data = data_balanced, x="Gender", y="ViewAnnouncements",
+               fill= "Relation",
+               palette = "jco", width = 0.5)
+p3<-p3+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
 
+p4<- ggboxplot(data = data_balanced, x="Gender", y="Discussion",
+               fill= "Relation",
+               palette = "jco", width = 0.5)
+p4<-p4+stat_compare_means(method = "anova", label.x = 1.2, label.y = 110)
+#grid.arrange(p1,p2,nrow=1, ncol=2)
+grid.arrange(p1,p2,p3,p4, ncol=2, nrow=2)
 
+#### More Boxplots ####
 
+# Univariate individual boxplots
+boxplot(data_balanced$RaisedHands, horizontal = TRUE, main="Class participation by raising hands")
+median(data_balanced$RaisedHands) # median=50 students
+boxplot(data_balanced$VisitedResources, horizontal = TRUE, main="Class participation by visiting resources")
+median(data_balanced$VisitedResources) # median = 71 students
+boxplot(data_balanced$ViewAnnouncements, horizontal = TRUE, main="Class participation by vieweing announcements")
+median(data_balanced$ViewAnnouncements) # median=30 students
+boxplot(data_balanced$Discussion, horizontal = TRUE, main="Discussions in class")
+median(data_balanced$Discussion) # 39 students
+
+# Multiple boxplots for comparison
+boxplot(data_balanced[,14:17], horizontal = TRUE, main="Class participation")
+
+# Univariate Histograms
+hist(data_balanced$RaisedHands, breaks = 50)
+hist(data_balanced$Discussion, breaks = 39)
+
+#### Density plots for continuous variables ####
+ggplot(data = data_balanced, aes(x=RaisedHands, group=StudentAbsentDays,
+                                 fill=StudentAbsentDays, position="stack"))+ 
+  geom_density(adjust=1.5, position = "fill")
+
+#### Violin plot (is a mix of box and density plot) ###
+
+    
+library(vioplot)
+par(mfrow=c(1,4)) # means 1 row and 4 cols
+# Reference: http://www.sthda.com/english/wiki/ggplot2-violin-plot-quick-start-guide-r-software-and-data-visualization
+vioplot(data_balanced$RaisedHands, col = "gray", names = "Raise Hand")
+vioplot(data_balanced$VisitedResources, col = "gray", names="Vist Resrc")
+vioplot(data_balanced$ViewAnnouncements, col = "gray", names="View Anounc")
+vioplot(data_balanced$Discussion, col = "gray", names="Discusn")
+dev.off()
+
+p<- ggplot(data = data_balanced, aes(x=Gender, y=RaisedHands, fill=Semester))+
+  geom_boxplot()
+
+p+coord_flip()+
+  scale_color_grey()+
+  theme_fivethirtyeight()+
+  stat_summary(fun.y=median, geom="point", size=2, color="red")
+  
+  
 
 
 ####### Miscelaneous Code below ##########

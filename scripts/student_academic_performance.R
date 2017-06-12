@@ -44,6 +44,9 @@ xapi.data$Class<- revalue(xapi.data$Class, c("H"="HighLevel","M"="MiddleLevel","
 xapi.data<- xapi.data[,c(1:9,14:17,10:13)]
 str(xapi.data)
 
+# Write the cleaned structured data back to file
+write.table(xapi.data, file = "data/lmsdata.csv", sep = ",", col.names = TRUE)
+
 
 # Dealing with Imbalanced data
 ## quick references: https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/
@@ -69,3 +72,6 @@ prop.table(table(data_balanced$Gender)) # there are 52% male students and 47% fe
 
 table(data_balanced$Relation)
 prop.table(table(data_balanced$Relation))
+
+# write the balanced data to file
+write.table(data_balanced, file = "data/lmsdata_balanced.csv", sep = ",", col.names = TRUE)

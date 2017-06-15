@@ -1,0 +1,25 @@
+Context
+
+The assembly election results for Uttar Pradesh(UP) were surprising to say the least. Never in the past has any single party secured a similar mandate. UP with a population of around 220 million is as big as the whole of united states. It has 403 constituencies each having its own demographic breakup. The election was conducted in 7 phases.
+
+Content
+
+The dataset has 8 variables:
+
+seat_allotment: As some of you might be aware that there was a coalition between INC and SP which materialized pretty late into the campaign. Hence, in a few constituencies the high command of the 2 parties could not convince contestants to forfeit their nomination. In such constituencies, there is a situation that is called a friendly fight(FF) where candidates from both parties INC and SP are contesting instead of just one. These constituencies are marked by the flag FF (Friendly Fight). Others are INC (contested by INC), SP(Contested by SP) and DNC(Contested by none)
+
+phase: The phase in which the election was conducted.
+
+ac_no: Assembly constituency number
+
+ac: Assembly constituency name
+
+district: District to which the ac belongs
+
+candidate: Candidate name
+
+party: Party name
+
+votes: votes for each candidate
+
+Source: Scraped from eciresults.nic.in

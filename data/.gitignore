@@ -1,1 +1,4 @@
 *.Rdata
+*.csv
+*.pdf
+*.txt

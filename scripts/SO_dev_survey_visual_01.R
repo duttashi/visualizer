@@ -7,7 +7,8 @@ rm(list = ls())
 
 # Load the data
 survey_result<- read.csv("data/survey_results_public.csv")
-
+str(survey_result)
+dim(survey_result)
 # Load the required libraries
 library(tidyverse)
 library(forcats) # for fct_lump()

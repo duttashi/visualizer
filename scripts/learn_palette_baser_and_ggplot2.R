@@ -23,6 +23,7 @@ library(RColorBrewer)
 # Sequential palettes are suited to ordered data that progress from low to high.
 # Diverging palettes are suited to centered data with extremes in either direction.
 # Qualitative palettes are suited to nominal or categorical data.
+par(mar = c(0, 4, 0, 0))
 display.brewer.all()
 # To create a RColorBrewer palette, use the brewer.pal function. It takes two arguments: n, the number of colors in the palette; and name, the name of the palette.
 brewer.pal(n = 8, name = "Set2")

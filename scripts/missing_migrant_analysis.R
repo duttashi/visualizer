@@ -4,12 +4,12 @@
 
 # Load the required libraries
 library(tidyverse)
-library(ggplot2)
+
 # clean the workspace
 rm(list = ls())
 # Load the dataset
 mismigrant_data<- read.csv("data/MissingMigrantsProject.csv", sep = ",", header = TRUE, 
-                          stringsAsFactors = FALSE)
+                          stringsAsFactors = TRUE)
 str(mismigrant_data)
 head(mismigrant_data)
 sum(is.na(mismigrant_data))

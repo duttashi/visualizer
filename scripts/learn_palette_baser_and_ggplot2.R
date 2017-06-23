@@ -36,7 +36,24 @@ plot(dist ~ speed, data=cars, pch=19, col=2)
 #To change these palettes we use one of the scale_color functions that come with ggplot2. For example to use the RColorBrewer palette “Set2”, we use the scale_color_brewer function, like so:
 
 library(ggplot2)  
-ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species)) + 
+
+# Scenario 1: To center align the plot title when using the default ggplot theme
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
+  ggtitle("Sepal & Petal length in Iris flower")+
   geom_point() +
-  scale_color_brewer(palette = "Set2")
+  scale_color_brewer(palette = "Set2")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ggsave("plot.pdf")
+
+# Scenario 2: To center align the plot title when using a ggplot theme
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
+  ggtitle("Sepal & Petal length in Iris flower")+
+  geom_point() +
+  scale_color_brewer(palette = "Set2")+
+  ggsave("plot.pdf")+ 
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
 # To change the smooth gradient color palette, we use the scale_color_gradient with low and high color values. For example, we can set the low value to white and the high value to red:

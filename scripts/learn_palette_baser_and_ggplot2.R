@@ -36,7 +36,7 @@ plot(dist ~ speed, data=cars, pch=19, col=2)
 #To change these palettes we use one of the scale_color functions that come with ggplot2. For example to use the RColorBrewer palette “Set2”, we use the scale_color_brewer function, like so:
 
 library(ggplot2)  
-
+attach(iris)
 # Scenario 1: To center align the plot title when using the default ggplot theme
 ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
   ggtitle("Sepal & Petal length in Iris flower")+
@@ -47,12 +47,18 @@ ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
 
 # Scenario 2: To center align the plot title when using a ggplot theme
 ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
-  ggtitle("Sepal & Petal length in Iris flower")+
+  ggtitle("Sepal & Petal length of Iris flower")+
   geom_point() +
   scale_color_brewer(palette = "Set2")+
   ggsave("plot.pdf")+ 
   theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5,
+                                  color = "darkred", face = "bold"),
+        axis.title.x = element_text(colour = "blue", face = "italic"),
+        axis.title.y = element_text(colour = "blue", face = "italic")
+        )
+
+        
 
 
 

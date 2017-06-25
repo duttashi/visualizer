@@ -50,7 +50,6 @@ ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
   ggtitle("Sepal & Petal length of Iris flower")+
   geom_point() +
   scale_color_brewer(palette = "Set2")+
-  ggsave("plot.pdf")+ 
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5,
                                   color = "darkred", face = "bold"),
@@ -58,6 +57,32 @@ ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
         axis.title.y = element_text(colour = "blue", face = "italic")
         )
 
+# Scenario 3: To add a smooth fitting line to the data
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length))+
+  ggtitle("Sepal & Petal length of Iris flower")+
+  geom_point(aes(color=Species)) +
+  scale_color_brewer(palette = "Set2")+
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5,
+                                  color = "darkred", face = "bold"),
+        axis.title.x = element_text(colour = "blue", face = "italic"),
+        axis.title.y = element_text(colour = "blue", face = "italic")
+  )+
+  geom_smooth(se=FALSE, method = "loess")
+
+ggplot(iris, aes(x=Sepal.Length, y=Petal.Length, color=Species))+
+  ggtitle("Sepal & Petal length of Iris flower")+
+  geom_point() +
+  scale_color_brewer(palette = "Set2")+
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5,
+                                  color = "darkred", face = "bold"),
+        axis.title.x = element_text(colour = "blue", face = "italic"),
+        axis.title.y = element_text(colour = "blue", face = "italic")
+  )+
+  geom_smooth(se=FALSE, method = "loess")
+
+help("geom_smooth")
         
 
 

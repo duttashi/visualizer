@@ -20,12 +20,14 @@ windowsFonts(RobotoCond=windowsFont("Roboto Condensed"))
 
 # testing custom colors. For reference see http://www.colorcombos.com/index.html
 ggplot(data = mtcars,aes(wt,mpg))+
-  geom_point(color="#153450")+
+  geom_point(color="#081576")+
   coord_cartesian()+
   scale_fill_viridis(discrete = T)+
   theme_grey(base_size = 15, base_family = "RobotoCond")+
   theme(legend.position = "none", axis.text = element_text(size = 15),
-        panel.background = element_rect(fill = "#FFF5C3"))
+        panel.background = element_rect(fill = "#fbefef"))
 
 
 # FEFCD7
+
+#E6E7E8

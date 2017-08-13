@@ -1,4 +1,4 @@
-# Objective: Add in the corner the highest value of the Y axis
+# Objective: Add in the corner the highest value of the Y axis.
 # Solution: Group the data and summarize and order by highest value
 
 # load required libraries

@@ -2,7 +2,7 @@
 # Solution: I offer several univariate visualizations and plot them on a single page
 
 library(ggplot2)
-
+attach(iris)
 plot_1 = ggplot(iris, aes(x=Petal.Length, colour=Species)) +
   geom_density() +
   labs(title="Density plots")

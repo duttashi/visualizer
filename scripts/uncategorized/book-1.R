@@ -20,3 +20,13 @@ library(gapminder)
 head(gapminder)
 p<-ggplot(data = gapminder, aes(x=gdpPercap, y=lifeExp))
 p+geom_point()
+
+# using the ggpubr package
+library(ggpubr)
+# boxplot
+dat<- as.data.frame(gapminder)
+str(dat)
+
+ggboxplot(data = dat, x= "year", y="lifeExp", palette = "simpsons",
+          orientation="horizontal", color = "peachpuff")
+

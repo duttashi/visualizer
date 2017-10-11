@@ -1,3 +1,9 @@
+# My session information for result reproducibility
+# > sessionInfo()
+# R version 3.4.2 (2017-09-28)
+# Platform: x86_64-w64-mingw32/x64 (64-bit)
+# Running under: Windows 7 x64 (build 7601) Service Pack 1
+
 
 # Before plotting the data, please do the following steps;
 # Step 1: Rename the column names as I have done. Please see the attached data file.

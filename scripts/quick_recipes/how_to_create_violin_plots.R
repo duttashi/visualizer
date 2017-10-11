@@ -7,24 +7,21 @@
 box_data<- read.csv("C:/Users/ashish.dutt/Downloads/Box.csv", sep = ",",
                     header = TRUE)
 str(box_data)
-box_data$X<- NULL # drop X
-str(box_data)
 
 # Step 3: Plot the variables
 
-# Example-1
+# Example-1: Converting a numeric variable to factor and then plotting it
 p <- ggplot(box_data, aes(factor(lessthan40), lessthan20))+
   geom_violin()
 p
 
-# Example-2
+# Example-2: Plotting numeric variable only
 p <- ggplot(box_data, aes(x=lessthan20, y=lessthan60))+
   geom_violin(trim=FALSE)
 p
 
 # Example-3
 # choose data within a specific limit to display
-range(box_data$lessthan20)
 range(box_data$lessthan60)
 p+scale_x_discrete(limits=c("100","300"))
 
@@ -55,3 +52,16 @@ p + geom_dotplot(binaxis='y', stackdir='center', dotsize=1, binwidth = 30)
 # violin plot with jittered points
 # 0.2 : degree of jitter in x direction
 p + geom_jitter(shape=16, position=position_jitter(0.2))
+
+# Example-8: Color effects
+p + scale_color_grey() + theme_classic()
+# Use brewer color palettes
+p+scale_color_brewer(palette="Dark2")
+
+# Use single color
+p <- ggplot(box_data, aes(x=lessthan20, y=lessthan60))+
+  geom_violin(trim=FALSE,fill='#A4A4A4', color="darkred")+
+  theme_minimal()
+p # show the plot
+
+# End of Script

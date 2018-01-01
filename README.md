@@ -1,4 +1,4 @@
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) [![License](https://github.com/duttashi/visualize/blob/master/LICENSE)]
+[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) [[License](https://github.com/duttashi/visualize/blob/master/LICENSE)]
 
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures

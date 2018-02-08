@@ -12,16 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction to data visualization
 With ever increasing volume of data, it is impossible to tell stories without visualizations. Data visualization is an art of how to turn numbers into useful knowledge. Before the technical implementations of the visualization, let’s see first how to select the right chart type.
 
+An effective chart is one that:
+
+1. Conveys the right information without distorting facts.
+2 Is simple but elegant. It should not force you to think much in order to get it.
+3. Aesthetics supports information rather that overshadow it.
+4. Is not overloaded with information.
+
 ### Selecting the Right Chart Type
-There are four basic presentation types:
-
-* Comparison
-* Composition
-* Distribution
-* Relationship
-
-To determine which amongst these is best suited for your data, I suggest you should answer a few questions like,
-Below is a great explanation on selecting a right chart type by Dr. Andrew Abela
+Primarily, there are 8 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 8 categories.
 
 ```{r}
 knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-chart.pdf")
@@ -30,13 +29,41 @@ knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-char
 
 In your day-to-day activities, you’ll come across the below listed 7 charts most of the time.
 
-1. Scatter Plot
-2. Histogram
-3. Bar & Stack Bar Chart
-4. Box Plot
-5. Area Chart
-6. Heat Map
-7. Correlogram
+1. Correlation
+  + Scatterplot
+  + Scatterplot With Encircling
+  + Jitter Plot
+  + Bubble Plot
+  + Animated Bubble Plot
+  + Marginal Histogram / Boxplot
+2. Deviation
+  + Diverging Bars
+  + Area Chart
+3. Ranking
+  + Ordered Bar Chart
+  + Dot Plot
+  + Slope Chart
+4. Distribution
+  + Histogram
+  + Density Plot
+  + Box Plot
+  + Dot + Box Plot
+  + Tufte Boxplot
+  + Violin Plot
+5. Composition
+  + Waffle Chart
+  + Bar Chart
+6. Change
+  + Time Series Plots
+  + Stacked Area Chart
+  + Seasonal Plot
+7. Groups
+  + Dendrogram
+  + Clusters
+8. Spatial
++ Open Street Map
++ Google Road Map
+
 
 1. Scatter Plot
 

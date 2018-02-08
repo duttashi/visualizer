@@ -3,6 +3,7 @@ title: "understanding data visualization"
 author: "Ashish Dutt"
 date: "February 8, 2018"
 output: pdf_document
+reference: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Jitter%20Plot
 ---
 
 ```{r setup, include=FALSE}
@@ -84,7 +85,6 @@ library(ggmap)
 
 #### Scatter Plot
 
-
 **When to use**: Scatter Plot is used to see the relationship between two continuous variables.
 
 It can be drawn using `geom_point()`. Additionally, `geom_smooth` which draws a smoothing line (based on loess) by default, can be tweaked to draw the line of best fit by setting `method='lm'`.
@@ -112,7 +112,7 @@ A categorical variable can be used in a scatterplot to show the characterstics o
 #### Scatterplot With Encircling
 When presenting the results, sometimes I would encirlce certain special group of points or region in the chart so as to draw the attention to those peculiar cases. This can be conveniently done using the `geom_encircle()` in `ggalt` package.
 
-Within  geom_encircle() , set the `data` to a new dataframe that contains only the points (rows) or interest. Moreover, You can `expand` the curve so as to pass just outside the points. The `color` and `size` (thickness) of the curve can be modified as well. See below example.
+Within  `geom_encircle()` , set the `data` to a new dataframe that contains only the points (rows) or interest. Moreover, You can `expand` the curve so as to pass just outside the points. The `color` and `size` (thickness) of the curve can be modified as well. See below example.
 
 ```{r}
 
@@ -139,5 +139,56 @@ ggplot(midwest, aes(x=area, y=poptotal)) +
        title="Scatterplot + Encircle", 
        caption="Source: midwest")
 
+```
+#### Jitter Plot
+Let’s look at a new data to draw the scatterplot. This time, I will use the `mpg` dataset to plot city mileage (`cty`) vs highway mileage (`hwy`).
+
+```{r}
+g <- ggplot(data=mpg, aes(cty, hwy))
+
+# Scatterplot
+g + geom_jitter(width = 0.5, size=1) + 
+  geom_smooth(method="lm", se=F) +
+  labs(subtitle="mpg: city vs highway mileage", 
+       y="hwy", 
+       x="cty", 
+       title="Scatterplot with overlapping points", 
+       caption="Source: midwest")
+```
+
+#### Bubble Plot
+
+While scatterplot lets you compare the relationship between 2 continuous variables, bubble chart serves well if you want to understand relationship within the underlying groups based on:
+
+1. A Categorical variable (by changing the color) and
+2. Another continuous variable (by changing the size of points).
+
+In simpler words, bubble charts are more suitable if you have 4-Dimensional data where two of them are numeric (X and Y) and one other categorical (color) and another numeric variable (size).
+
+```{r}
+mpg_select <- mpg[mpg$manufacturer %in% c("audi", "ford", "honda", "hyundai"), ]
+
+# Scatterplot
+g <- ggplot(mpg_select, aes(displ, cty)) + 
+  labs(subtitle="mpg: Displacement vs City Mileage",
+       title="Bubble chart")
+
+g + geom_jitter(aes(col=manufacturer, size=hwy)) + 
+  geom_smooth(aes(col=manufacturer), method="lm", se=F)
+
+```
+#### Marginal Histogram / Boxplot
+
+If you want to show the relationship as well as the distribution in the same chart, use the marginal histogram. It has a histogram of the X and Y variables at the margins of the scatterplot.
+
+This can be implemented using the `ggMarginal()` function from the `‘ggExtra’` package. Apart from a `histogram`, you could choose to draw a `marginal boxplot` or `density` plot by setting the respective `type` option.
+
+```{r}
+g <- ggplot(mpg, aes(cty, hwy)) + 
+  geom_count() + 
+  geom_smooth(method="lm", se=F)
+
+ggMarginal(g, type = "histogram", fill="transparent")
+ggMarginal(g, type = "boxplot", fill="transparent")
 ```
 

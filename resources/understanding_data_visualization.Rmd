@@ -20,8 +20,48 @@ An effective chart is one that:
 3. Aesthetics supports information rather that overshadow it.
 4. Is not overloaded with information.
 
+### Questions to ask when deciding which chart to use
+
+Q1. Do you want to compare values?
+
+To create a comparison chart, use these types of graphs:
+
+- Column
+- Bar
+- Circular Area 
+- Line 
+- Scatter Plot
+
+Q2. Do you want to show the composition?
+
+To show composition, use these charts:
+
+- Stacked Bar
+- Stacked Column
+- Area
+
+Q3. Do you want to understand the distribution of your data?
+
+To show distributions, use these charts:
+
+- Scatter plot
+- Line
+- Bar
+- Column
+
+Q3. Are you interested in analyzing trends in your data?
+
+- Line
+- Column
+
+Q4. Do you want to understand the relationship between the variables in your dataset?
+
+- Scatter plot
+- Bubble
+- Line
+
 ### Selecting the Right Chart Type
-Primarily, there are 07 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 8 categories.
+Primarily, there are 07 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 7 categories.
 
 ```{r}
 knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-chart.pdf")

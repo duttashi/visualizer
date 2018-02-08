@@ -42,19 +42,16 @@ In your day-to-day activities, you’ll come across the below listed 7 charts mo
 3. Ranking
   + Ordered Bar Chart
   + Dot Plot
-  + Slope Chart
 4. Distribution
-  + Histogram
+  + Histogram on a continuous variable
+  + Histogram on a categorical variable
   + Density Plot
   + Box Plot
   + Dot + Box Plot
 5. Composition
-  + Waffle Chart
   + Bar Chart
 6. Change
   + Time Series Plots
-  + Stacked Area Chart
-  + Seasonal Plot
 7. Groups
   + Dendrogram
   + Clusters

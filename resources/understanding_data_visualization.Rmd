@@ -21,7 +21,7 @@ An effective chart is one that:
 4. Is not overloaded with information.
 
 ### Selecting the Right Chart Type
-Primarily, there are 8 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 8 categories.
+Primarily, there are 07 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 8 categories.
 
 ```{r}
 knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-chart.pdf")
@@ -35,7 +35,7 @@ In your day-to-day activities, you’ll come across the below listed 7 charts mo
   + Scatterplot With Encircling
   + Jitter Plot
   + Bubble Plot
-  + Marginal Histogram / Boxplot
+  + Correlogram
 2. Deviation
   + Diverging Bars
   + Area Chart
@@ -58,9 +58,6 @@ In your day-to-day activities, you’ll come across the below listed 7 charts mo
 7. Groups
   + Dendrogram
   + Clusters
-8. Spatial
-+ Open Street Map
-+ Google Road Map
 
 Load the required libraries
 ```{r}
@@ -76,9 +73,12 @@ library(scales)
 library(ggthemes)
 library(lubridate)
 library(ggdendro)
-library(ggmap)
 ```
+Set the background theme.
 
+```{r}
+theme_set(theme_bw())  # pre-set the bw theme.
+```
 ### 1. Correlation
 
 #### Scatter Plot
@@ -88,7 +88,6 @@ library(ggmap)
 It can be drawn using `geom_point()`. Additionally, `geom_smooth` which draws a smoothing line (based on loess) by default, can be tweaked to draw the line of best fit by setting `method='lm'`.
 
 ```{r}
-theme_set(theme_bw())  # pre-set the bw theme.
 data("midwest", package = "ggplot2")
 # midwest <- read.csv("http://goo.gl/G1K41K")  # bkup data source
 
@@ -175,19 +174,24 @@ g + geom_jitter(aes(col=manufacturer, size=hwy)) +
   geom_smooth(aes(col=manufacturer), method="lm", se=F)
 
 ```
-#### Marginal Histogram / Boxplot
+#### Correlogram
 
-If you want to show the relationship as well as the distribution in the same chart, use the marginal histogram. It has a histogram of the X and Y variables at the margins of the scatterplot.
-
-This can be implemented using the `ggMarginal()` function from the `‘ggExtra’` package. Apart from a `histogram`, you could choose to draw a `marginal boxplot` or `density` plot by setting the respective `type` option.
+Correlogram let’s you `examine the correlation` of `multiple continuous variables` present in the same dataframe. This is conveniently implemented using the `ggcorrplot` package.
 
 ```{r}
-g <- ggplot(mpg, aes(cty, hwy)) + 
-  geom_count() + 
-  geom_smooth(method="lm", se=F)
+# Correlation matrix
+data(mtcars)
+corr <- round(cor(mtcars), 1)
 
-ggMarginal(g, type = "histogram", fill="transparent")
-#plt1<- ggMarginal(g, type = "boxplot", fill="transparent")
+# Plot
+ggcorrplot(corr, hc.order = TRUE, 
+           type = "lower", 
+           lab = TRUE, 
+           lab_size = 3, 
+           method="circle", 
+           colors = c("tomato2", "white", "springgreen3"), 
+           title="Correlogram of mtcars", 
+           ggtheme=theme_bw)
 
 ```
 
@@ -387,4 +391,104 @@ g + geom_boxplot() +
 
 ```
 
+### 5. Composition
+
+#### Bar Chart
+
+By default, `geom_bar()` has the `stat` set to `count`. That means, when you provide just a continuous X variable (and no Y variable), it tries to make a histogram out of the data.
+
+In order to make a bar chart create bars instead of histogram, you need to do two things.
+
+a. Set `stat=identity`
+b. Provide both `x` and `y` inside `aes()` where, `x` is either `character` or `factor` and `y` is `numeric`.
+
+```{r}
+# prep frequency table
+freqtable <- table(mpg$manufacturer)
+df <- as.data.frame.table(freqtable)
+head(df)
+```
+```{r}
+g <- ggplot(df, aes(Var1, Freq))
+g + geom_bar(stat="identity", width = 0.5, fill="tomato2") + 
+      labs(title="Bar Chart", 
+           subtitle="Manufacturer of vehicles", 
+           caption="Source: Frequency of Manufacturers from 'mpg' dataset") +
+      theme(axis.text.x = element_text(angle=65, vjust=0.6))
+```
+It can be computed directly from a column variable as well. In this case, only X is provided and `stat=identity` is not set.
+
+```{r}
+# From on a categorical column variable
+g <- ggplot(mpg, aes(manufacturer))
+g + geom_bar(aes(fill=class), width = 0.5) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  labs(title="Categorywise Bar Chart", 
+       subtitle="Manufacturer of vehicles", 
+       caption="Source: Manufacturers from 'mpg' dataset")
+```
+
+### 6. Change
+
+#### Time Series Plots
+
+Time Series Plot From a Data Frame
+
+Using `geom_line()`, a time series (or line chart) can be drawn from a data.frame as well.
+```{r}
+ggplot(economics, aes(x=date)) + 
+  geom_line(aes(y=returns_perc)) + 
+  labs(title="Time Series Chart", 
+       subtitle="Returns Percentage from 'Economics' Dataset", 
+       caption="Source: Economics", 
+       y="Returns %")
+```
+
+### 7. Groups
+
+#### Hierarchical Dendrogram
+
+```{r}
+library(ggplot2)
+library(ggdendro)
+hc <- hclust(dist(USArrests), "ave")  # hierarchical clustering
+# plot
+ggdendrogram(hc, rotate = TRUE, size = 2)
+
+```
+#### Clusters
+
+It is possible to show the distinct clusters or groups using `geom_encircle()`. If the dataset has multiple weak features, you can compute the principal components and draw a scatterplot using PC1 and PC2 as X and Y axis.
+
+The `geom_encircle()` can be used to encircle the desired groups. The only thing to note is the data argument to `geom_circle()`. You need to provide a subsetted dataframe that contains only the observations (rows) that belong to the group as the data argument.
+
+```{r}
+library(ggplot2)
+library(ggalt)
+library(ggfortify)
+
+# Compute data with principal components 
+df <- iris[c(1, 2, 3, 4)]
+pca_mod <- prcomp(df)  # compute principal components
+
+# Data frame of principal components 
+df_pc <- data.frame(pca_mod$x, Species=iris$Species)  # dataframe of principal components
+df_pc_vir <- df_pc[df_pc$Species == "virginica", ]  # df for 'virginica'
+df_pc_set <- df_pc[df_pc$Species == "setosa", ]  # df for 'setosa'
+df_pc_ver <- df_pc[df_pc$Species == "versicolor", ]  # df for 'versicolor'
+ 
+# Plot 
+ggplot(df_pc, aes(PC1, PC2, col=Species)) + 
+  geom_point(aes(shape=Species), size=2) +   # draw points
+  labs(title="Iris Clustering", 
+       subtitle="With principal components PC1 and PC2 as X and Y axis",
+       caption="Source: Iris") + 
+  coord_cartesian(xlim = 1.2 * c(min(df_pc$PC1), max(df_pc$PC1)), 
+                  ylim = 1.2 * c(min(df_pc$PC2), max(df_pc$PC2))) +   
+  # change axis limits
+  geom_encircle(data = df_pc_vir, aes(x=PC1, y=PC2)) +   
+  # draw circles
+  geom_encircle(data = df_pc_set, aes(x=PC1, y=PC2)) + 
+  geom_encircle(data = df_pc_ver, aes(x=PC1, y=PC2))
+```
 

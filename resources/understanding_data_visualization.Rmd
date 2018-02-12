@@ -3,12 +3,8 @@ title: "understanding data visualization"
 author: "Ashish Dutt"
 date: "February 8, 2018"
 output: pdf_document
-reference: http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Jitter%20Plot
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+---
 
 ## Introduction to data visualization
 With ever increasing volume of data, it is impossible to tell stories without visualizations. Data visualization is an art of how to turn numbers into useful knowledge. Before the technical implementations of the visualization, let’s see first how to select the right chart type.
@@ -63,11 +59,6 @@ Q4. Do you want to understand the relationship between the variables in your dat
 ### Selecting the Right Chart Type
 Primarily, there are 07 types of objectives you may construct plots. So, before you actually make the plot, try and figure what findings and relationships you would like to convey or examine through the visualization. Chances are it will fall under one (or sometimes more) of these 7 categories.
 
-```{r}
-knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-chart.pdf")
-
-```
-
 In your day-to-day activities, you’ll come across the below listed 7 charts most of the time.
 
 1. Correlation
@@ -119,7 +110,7 @@ theme_set(theme_bw())  # pre-set the bw theme.
 
 ### 1. Correlation
 
-#### Scatter Plot
+#### A. Scatter Plot
 
 **When to use**: Scatter Plot is used to see the relationship between two continuous variables.
 
@@ -144,7 +135,7 @@ plot(gg)
 ```
 A categorical variable can be used in a scatterplot to show the characterstics of the plotted variables. So, the above code can be modified as,
 
-#### Scatterplot With Encircling
+#### B. Scatterplot With Encircling
 When presenting the results, sometimes I would encirlce certain special group of points or region in the chart so as to draw the attention to those peculiar cases. This can be conveniently done using the `geom_encircle()` in `ggalt` package.
 
 Within  `geom_encircle()` , set the `data` to a new dataframe that contains only the points (rows) or interest. Moreover, You can `expand` the curve so as to pass just outside the points. The `color` and `size` (thickness) of the curve can be modified as well. See below example.
@@ -176,7 +167,7 @@ ggplot(midwest, aes(x=area, y=poptotal)) +
 
 ```
 
-#### Jitter Plot
+#### C. Jitter Plot
 Let’s look at a new data to draw the scatterplot. This time, I will use the `mpg` dataset to plot city mileage (`cty`) vs highway mileage (`hwy`).
 
 ```{r}
@@ -192,7 +183,7 @@ g + geom_jitter(width = 0.5, size=1) +
        caption="Source: midwest")
 ```
 
-#### Bubble Plot
+#### D. Bubble Plot
 
 While scatterplot lets you compare the relationship between 2 continuous variables, bubble chart serves well if you want to understand relationship within the underlying groups based on:
 
@@ -214,7 +205,7 @@ g + geom_jitter(aes(col=manufacturer, size=hwy)) +
 
 ```
 
-#### Correlogram
+#### E. Correlogram
 
 Correlogram let’s you `examine the correlation` of `multiple continuous variables` present in the same dataframe. This is conveniently implemented using the `ggcorrplot` package.
 
@@ -239,7 +230,7 @@ ggcorrplot(corr, hc.order = TRUE,
 Compare variation in values between small number of items (or categories) with respect to a fixed reference.
 
 
-#### Diverging Bars
+#### F. Diverging Bars
 Diverging Bars is a bar chart that can handle both negative and positive values. This can be implemented by a smart tweak with `geom_bar()`. But the usage of `geom_bar()` can be quite confusing. Thats because, it can be used to make a bar chart as well as a histogram. Let me explain.
 
 By default, `geom_bar()` has the stat set to count. That means, when you provide just a continuous X variable (and no Y variable), it tries to make a histogram out of the data.
@@ -272,7 +263,7 @@ ggplot(mtcars, aes(x=`car name`, y=mpg_z, label=mpg_z)) +
 
 ```
 
-#### Area Chart
+#### G. Area Chart
 Area charts are typically used to visualize how a particular metric (such as % returns from a stock) performed compared to a certain baseline. Other types of %returns or %change data are also commonly used. The `geom_area()` implements this.
 
 ```{r}
@@ -300,7 +291,7 @@ ggplot(economics[1:100, ], aes(date, returns_perc)) +
 ### 3. Ranking
 Used to compare the position or performance of multiple items with respect to each other. Actual values matters somewhat less than the ranking.
 
-#### Ordered Bar Chart
+#### H. Ordered Bar Chart
 Ordered Bar Chart is a Bar Chart that is ordered by the Y axis variable. Just sorting the dataframe by the variable of interest isn’t enough to order the bar chart. In order for the bar chart to retain the order of the rows, the X axis variable (i.e. the categories) has to be converted into a factor.
 
 Let’s plot the mean city mileage for each manufacturer from mpg dataset. First, aggregate the data and sort it before you draw the plot. Finally, the X variable is converted to a factor.
@@ -324,7 +315,7 @@ ggplot(cty_mpg, aes(x=make, y=mileage)) +
 
 ```
 
-#### Dot Plot
+#### I. Dot Plot
 
 Dot plots emphasizes more on the rank ordering of items with respect to actual values and how far apart are the entities with respect to each other.
 
@@ -350,7 +341,7 @@ When you have lots and lots of data points and want to study where and how the d
 
 #### Histogram
 
-##### Histogram on a continuous variable
+##### J. Histogram on a continuous variable
 Histogram on a continuous variable can be accomplished using either `geom_bar()` or `geom_histogram()`. When using `geom_histogram()`, you can control the number of bars using the `bins` option. Else, you can set the range covered by each bin using `binwidth`. The value of binwidth is on the same scale as the continuous variable on which histogram is built. Since, `geom_histogram` gives facility to control both number of `bins` as well as `binwidth`, it is the preferred option to create histogram on continuous variables.
 
 ```{r}
@@ -373,7 +364,7 @@ g + geom_histogram(aes(fill=class),
 
 ```
 
-#### Histogram on a categorical variable
+#### K. Histogram on a categorical variable
 Histogram on a categorical variable would result in a frequency chart showing bars for each category. By adjusting width, you can adjust the thickness of the bars.
 ```{r}
 # Histogram on a Categorical variable
@@ -384,7 +375,7 @@ g + geom_bar(aes(fill=class), width = 0.5) +
        subtitle="Manufacturer across Vehicle Classes") 
 ```
 
-#### Density Plot
+#### L. Density Plot
 ```{r}
 # Plot
 g <- ggplot(mpg, aes(cty))
@@ -397,7 +388,7 @@ g + geom_density(aes(fill=factor(cyl)), alpha=0.8) +
 
 ```
 
-#### Box Plot
+#### M. Box Plot
 
 Box plot is an excellent tool to study the distribution. It can also show the distributions within multiple groups, along with the median, range and outliers if any.
 
@@ -416,7 +407,7 @@ g + geom_boxplot(varwidth=T, fill="plum") +
          y="City Mileage")
 ```
 
-#### Dot + Box Plot
+#### N. Dot + Box Plot
 On top of the information provided by a box plot, the dot plot can provide more clear information in the form of summary statistics by each group. The dots are staggered such that each dot represents one observation. So, in below chart, the number of dots for a given manufacturer will match the number of rows of that manufacturer in source data.
 
 ```{r}
@@ -438,7 +429,7 @@ g + geom_boxplot() +
 
 ### 5. Composition
 
-#### Bar Chart
+#### O. Bar Chart
 
 By default, `geom_bar()` has the `stat` set to `count`. That means, when you provide just a continuous X variable (and no Y variable), it tries to make a histogram out of the data.
 
@@ -475,7 +466,7 @@ g + geom_bar(aes(fill=class), width = 0.5) +
 
 ### 6. Change
 
-#### Time Series Plots
+#### P. Time Series Plots
 
 Time Series Plot From a Data Frame
 
@@ -491,7 +482,7 @@ ggplot(economics, aes(x=date)) +
 
 ### 7. Groups
 
-#### Hierarchical Dendrogram
+#### Q. Hierarchical Dendrogram
 
 ```{r}
 library(ggplot2)
@@ -502,7 +493,7 @@ ggdendrogram(hc, rotate = TRUE, size = 2)
 
 ```
 
-#### Clusters
+#### R. Clusters
 
 It is possible to show the distinct clusters or groups using `geom_encircle()`. If the dataset has multiple weak features, you can compute the principal components and draw a scatterplot using PC1 and PC2 as X and Y axis.
 

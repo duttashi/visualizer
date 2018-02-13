@@ -118,7 +118,7 @@ It can be drawn using `geom_point()`. Additionally, `geom_smooth` which draws a 
 
 ```{r}
 data("midwest", package = "ggplot2")
-# midwest <- read.csv("http://goo.gl/G1K41K")  # bkup data source
+# midwest <- read.csv("https://goo.gl/WtBMC3")  # backup data source
 
 # Scatterplot
 gg <- ggplot(midwest, aes(x=area, y=poptotal)) + 

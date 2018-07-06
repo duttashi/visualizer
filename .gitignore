@@ -5,4 +5,7 @@
 *.RData
 *.pdf
 *.ipynb_checkpoints
+Rplot-SO-*.tiff
+Rplot-SO-*.png
+SO-*.png
 

@@ -1,4 +1,6 @@
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) [[License](https://github.com/duttashi/visualize/blob/master/LICENSE)]
+[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) 
+
+*Copyright 2017-2027 [Ashish Dutt](https://duttashi.github.io/). Licensed under the [MIT license](https://github.com/duttashi/visualize/blob/master/LICENSE).*
 
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures
@@ -12,8 +14,6 @@ I benefit much from the online community in terms of learning and discussions, t
 ## Contact
 If you'd like to contact me regarding bugs, questions, or general consulting, feel free to drop me a line - 
 [ashishdutt@yahoo.com.my]
-
-*Copyright 2017 [Ashish Dutt](https://duttashi.github.io/).*
 
 <p align="center">
 <a href="https://www.paypal.me/ashishdutt">

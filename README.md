@@ -1,5 +1,3 @@
-
-
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures
 
@@ -23,8 +21,6 @@ Please see the [contributing guide](CONTRIBUTING.md).
 [Ashish Dutt](https://duttashi.github.io/about/)
 
 
-<p align="center">
-<a href="https://www.paypal.me/ashishdutt">
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" />
 </a>
 </p>

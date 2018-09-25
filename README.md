@@ -1,7 +1,3 @@
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) 
-
-*Copyright 2017-2027 [Ashish Dutt](https://duttashi.github.io/). Licensed under the [MIT license](https://github.com/duttashi/visualize/blob/master/LICENSE).*
-
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures
 
@@ -11,12 +7,20 @@ I have provided relevant references in the *resources* folder. In this folder, i
 
 I benefit much from the online community in terms of learning and discussions, therefore, I will share my learning on my [blog](https://duttashi.github.io/blog/)
 
-## Contact
-If you'd like to contact me regarding bugs, questions, or general consulting, feel free to drop me a line - 
-[ashishdutt@yahoo.com.my]
+###### Have a question?
 
-<p align="center">
-<a href="https://www.paypal.me/ashishdutt">
+Ask your question on [Stack Overflow](http://stackoverflow.com/questions/tagged/ggplot2)
+or the [R-SIG-Finance](https://stat.ethz.ch/mailman/listinfo/r-sig-finance)
+mailing list (you must subscribe to post).
+
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+
+Please see the [contributing guide](CONTRIBUTING.md).
+
+## Author
+[Ashish Dutt](https://duttashi.github.io/about/)
+
+
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" />
 </a>
 </p>

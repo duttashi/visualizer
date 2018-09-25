@@ -1,4 +1,8 @@
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--08--22-green.svg)](/commits/master) [[License](https://github.com/duttashi/visualize/blob/master/LICENSE)]
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/duttashi/visualizer/graphs/commit-activity)
+[![Issues](	https://img.shields.io/github/issues/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/issues)
+[![Popularity Score](https://img.shields.io/github/forks/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/network)
+[![Interested](https://img.shields.io/github/stars/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duttashi/visualizer/blob/master/LICENSE)
 
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures
@@ -9,11 +13,19 @@ I have provided relevant references in the *resources* folder. In this folder, i
 
 I benefit much from the online community in terms of learning and discussions, therefore, I will share my learning on my [blog](https://duttashi.github.io/blog/)
 
-## Contact
-If you'd like to contact me regarding bugs, questions, or general consulting, feel free to drop me a line - 
-[ashishdutt@yahoo.com.my]
+###### Have a question?
 
-*Copyright 2017 [Ashish Dutt](https://duttashi.github.io/).*
+Ask your question on [Stack Overflow](http://stackoverflow.com/questions/tagged/ggplot2)
+or the [R-SIG-Finance](https://stat.ethz.ch/mailman/listinfo/r-sig-finance)
+mailing list (you must subscribe to post).
+
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+
+Please see the [contributing guide](CONTRIBUTING.md).
+
+## Author
+[Ashish Dutt](https://duttashi.github.io/about/)
+
 
 <p align="center">
 <a href="https://www.paypal.me/ashishdutt">

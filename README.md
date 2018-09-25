@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/duttashi/visualizer/graphs/commit-activity)
+[![Issues](	https://img.shields.io/github/issues/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/issues)
+[![Popularity Score](https://img.shields.io/github/forks/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/network)
+[![Interested](https://img.shields.io/github/stars/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duttashi/visualizer/blob/master/LICENSE)
+
+>>>>>>> modified readme.md with following changes:
 # Pretty visuals
 #### Learning to paint beautiful *data fuleled* pictures
 

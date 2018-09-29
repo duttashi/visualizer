@@ -1,15 +1,10 @@
-# Readme
-
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/duttashi/visualizer/graphs/commit-activity)
 [![Issues](	https://img.shields.io/github/issues/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/issues)
 [![Popularity Score](https://img.shields.io/github/forks/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/network)
 [![Interested](https://img.shields.io/github/stars/duttashi/visualizer.svg)](https://github.com/duttashi/visualizer/stargazers)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/duttashi/visualizer/blob/master/LICENSE)
 
-## Pretty visuals
-### Learning to paint beautiful *data fuleled* pictures
-
- *"A picture is worth a thousand words"*, as the adage goes. The motivation for this repository is derived from this adage. I want to create aesthetically pleasing visuals, that conform to the visualisation principles set by experts like, *Edward Tufte*. Besides, Nathan Yau's website, *[FiveThirtyEight](https://fivethirtyeight.com/)* has been an inspiration to design custom theme for plotting data points. 
+*"A picture is worth a thousand words"*, as the adage goes. The motivation for this repository is derived from this adage. I want to create aesthetically pleasing visuals, that conform to the visualisation principles set by experts like, *Edward Tufte*. Besides, Nathan Yau's website, *[FiveThirtyEight](https://fivethirtyeight.com/)* has been an inspiration to design custom theme for plotting data points. 
 
 I have provided relevant references in the *resources* folder. In this folder, interested reader will find books, website links and tutorials, that have aided my understanding of visualization principles.
 
